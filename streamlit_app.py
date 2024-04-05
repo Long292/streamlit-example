@@ -38,17 +38,15 @@ In the meantime, below is an example of what you can do with just a few lines of
 #         color=alt.Color("idx", legend=None, scale=alt.Scale()),
 #         size=alt.Size("rand", legend=None, scale=alt.Scale(range=[1, 150])),
 #     ))
-
+!pip install torch
+!pip install transformers
 import streamlit as st
-# import torch
-import transformers
-
-# Use a pipeline as a high-level helper
 from transformers import pipeline
 
-pipe = pipeline("text2text-generation", model="long292/bartpho-base-applied-backtranslation")
-text = st.text_area('enter some text')
+text = st.text_area('Enter some text')
 
 if text:
-  out = pipe(text)
-  st.json(out)
+    pipe = pipeline("text2text-generation", model="long292/bartpho-syllable-base-applied-backtranslation")
+    out = pipe(text)
+    st.json(out)
+
