@@ -38,8 +38,8 @@ In the meantime, below is an example of what you can do with just a few lines of
 #         color=alt.Color("idx", legend=None, scale=alt.Scale()),
 #         size=alt.Size("rand", legend=None, scale=alt.Scale(range=[1, 150])),
 #     ))
-!pip install torch
-!pip install transformers
+import torch
+import transformers
 import streamlit as st
 from transformers import pipeline
 
