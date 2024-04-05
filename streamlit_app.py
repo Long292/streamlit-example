@@ -1,52 +1,22 @@
-# import altair as alt
-# import numpy as np
-# import pandas as pd
-# import streamlit as st
-
-"""
-# Welcome to Streamlit!
-
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:.
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
-
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
-
-# num_points = st.slider("Number of points in spiral", 1, 10000, 1100)
-# num_turns = st.slider("Number of turns in spiral", 1, 300, 31)
-
-# indices = np.linspace(0, 1, num_points)
-# theta = 2 * np.pi * num_turns * indices
-# radius = indices
-
-# x = radius * np.cos(theta)
-# y = radius * np.sin(theta)
-
-# df = pd.DataFrame({
-#     "x": x,
-#     "y": y,
-#     "idx": indices,
-#     "rand": np.random.randn(num_points),
-# })
-
-# st.altair_chart(alt.Chart(df, height=700, width=700)
-#     .mark_point(filled=True)
-#     .encode(
-#         x=alt.X("x", axis=None),
-#         y=alt.Y("y", axis=None),
-#         color=alt.Color("idx", legend=None, scale=alt.Scale()),
-#         size=alt.Size("rand", legend=None, scale=alt.Scale(range=[1, 150])),
-#     ))
 import torch
 import transformers
 import streamlit as st
-from transformers import pipeline
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
+@st.cache(allow_output_mutation=True)
+
+def get_model():
+    tokenizer = AutoTokenizer.from_pretrained("long292/bartpho-syllable-base-applied-backtranslation")
+    model = AutoModelForSeq2SeqLM.from_pretrained("long292/bartpho-syllable-base-applied-backtranslation")
+    return tokenizer, model
+
+tokenizer, model = get_model()
+user_input = st.text_area('Nhap cau ban muon dich vao day nha')
+button = st.button("Dich nghia")
 text = st.text_area('Enter some text')
 
-if text:
-    pipe = pipeline("text2text-generation", model="long292/bartpho-syllable-base-applied-backtranslation")
-    out = pipe(text)
-    st.json(out)
-
+if user_input and button:
+    input_ids = tokenizer([user_input], return_tensors="pt").input_ids
+    output =  model.generate(input_ids)
+    pred = tokenizer_7.decode(output_ids[0], skip_special_tokens=True)
+    st.write(pred)
