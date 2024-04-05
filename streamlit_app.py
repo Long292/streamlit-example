@@ -23,7 +23,7 @@
 
 import streamlit as st
 import numpy as np
-from transformers import BertTokenizer, BertForSequenceClassification
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import torch
 
 @st.cache(allow_output_mutation=True)
