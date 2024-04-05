@@ -28,9 +28,9 @@ import torch
 
 @st.cache(allow_output_mutation=True)
 def get_model():
-    tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-    model = BertForSequenceClassification.from_pretrained("pnichite/YTFineTuneBert")
-    return tokenizer,model
+    tokenizer = AutoTokenizer.from_pretrained("long292/bartpho-syllable-base-applied-backtranslation")
+    model = AutoModelForSeq2SeqLM.from_pretrained("long292/bartpho-syllable-base-applied-backtranslation")
+    return tokenizer, model
 
 
 tokenizer,model = get_model()
